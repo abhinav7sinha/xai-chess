@@ -44,11 +44,16 @@ class Util():
         old_unattacked_squares = list(set(list(range(64)))-set(board.attacks(move.from_square)))
         new_attacked_squares=self.get_critical_controlled_squares(board, move)
         # print('sqs:', [chess.square_name(sq) for sq in (set(old_unattacked_squares) & set(new_attacked_squares))])
-        for square in (set(old_unattacked_squares) & set(new_attacked_squares)):
+        for square in (set(old_unattacked_squares) & set(new_attacked_squares)-set([move.from_square])):
             if board.color_at(square) is not board.turn:
-                attacks.append(f'{board.piece_at(move.from_square)} attacks {board.piece_at(square)} at {chess.square_name(square)}')
+                if self.is_control(board, board.turn, square)!=1:
+                    if board.piece_at(square) is None:
+                        attacks.append(f'{board.piece_at(move.from_square)} controls {chess.square_name(square)}')
+                    else:
+                        attacks.append(f'{board.piece_at(move.from_square)} attacks {board.piece_at(square)} at {chess.square_name(square)}')
             elif board.color_at(square) is board.turn:
-                defends.append(f'{board.piece_at(move.from_square)} defends {board.piece_at(square)} at {chess.square_name(square)}')
+                if self.is_control(board, board.turn, square)!=1:
+                    defends.append(f'{board.piece_at(move.from_square)} defends {board.piece_at(square)} at {chess.square_name(square)}')
         
         if self.check_bishop_ld(board, move):
             bld.append('Places Bishop on long diagonal')
