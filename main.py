@@ -1,20 +1,17 @@
 import util
 import chess
-import threading
 
 import os
 os.system('cls' if os.name == 'nt' else 'clear')
 
 class xai_chess():
     '''
-    class containing core xai-chess functionality
+    class containing game-play functionality
     '''
 
     def __init__(self) -> None:
         # initialize util object from Util class
         self.util_obj=util.Util()
-    
-    # def
     
 if __name__=='__main__':
     xai_prog=xai_chess()
