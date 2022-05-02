@@ -15,7 +15,7 @@ class Util():
         self.piece_score = {'P': 1, 'p': 1, 'N': 3, 'n': 3, 'B': 3, 'b': 3, 'R': 5, 'r': 5,\
             'Q': 9, 'q': 9, 'K': 10, 'k': 10}
         self.central_squares=list(range(18,22))+list(range(26,30))+list(range(34,38))+\
-            list(range(42,50))
+            list(range(42,46))
     
     def commentary(self, board, move):
         '''
@@ -43,7 +43,7 @@ class Util():
         old_attacked_squares=board.attacks(move.from_square)
         old_unattacked_squares = list(set(list(range(64)))-set(board.attacks(move.from_square)))
         new_attacked_squares=self.get_critical_controlled_squares(board, move)
-        print('sqs:', [chess.square_name(sq) for sq in (set(old_unattacked_squares) & set(new_attacked_squares))])
+        # print('sqs:', [chess.square_name(sq) for sq in (set(old_unattacked_squares) & set(new_attacked_squares))])
         for square in (set(old_unattacked_squares) & set(new_attacked_squares)):
             if board.color_at(square) is not board.turn:
                 attacks.append(f'{board.piece_at(move.from_square)} attacks {board.piece_at(square)} at {chess.square_name(square)}')
@@ -305,3 +305,4 @@ class Util():
         eng_move=engine.play(eng_board, chess.engine.Limit(time=1))
         # if you want to return uci string use eng_move.move.uci()
         return eng_move.move
+    
